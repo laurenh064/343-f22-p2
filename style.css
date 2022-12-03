@@ -1,29 +1,11 @@
-/* main {
-  display: flex;
-  flex-direction: row;
-}
-#resultContainer {
-  display: flex;
-  flex-wrap: wrap;
-  row-gap: 1rem;
-  column-gap: 1rem;
-}
-
-#column {
-  width: 50vw;
-}
-
-.card-img-top {
-  width: 100%;
-  object-fit: cover;
-} */
 
 * { box-sizing: border-box; }
 
 /* force scrollbar */
 html { overflow-y: scroll; }
 
-body { font-family: sans-serif; }
+body { font-family: 'Open Sans', sans-serif; 
+padding: 0 !important;}
 
 
 .grid-item > img {
@@ -59,4 +41,9 @@ body { font-family: sans-serif; }
   display: block;
   max-width: 100%;
   border-radius: 5px;
+  cursor: pointer;
+}
+
+.modal-content {
+  width: inherit;
 }
