@@ -126,7 +126,7 @@ function cleanData(data) {
 //   {
 //     headers: {
 //       Authorization:
-//         "Basic YWNjX2NiYjk5MWJkZmMzZTYzMToyN2Q0YzJiYWIxNDg5ZDUwNzVhMGU0OWY1ZDhlNTgxMA==",
+//         "put key here",
 //     },
 //   }
 // )
