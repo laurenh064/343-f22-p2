@@ -127,8 +127,7 @@ async function getPalette(link) {
     `https://api.imagga.com/v2/colors?image_url=${link}`,
     {
       headers: {
-        Authorization:
-          "Basic YWNjX2NiYjk5MWJkZmMzZTYzMToyN2Q0YzJiYWIxNDg5ZDUwNzVhMGU0OWY1ZDhlNTgxMA==",
+        Authorization: "put key here",
       },
     }
   );
