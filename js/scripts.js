@@ -81,7 +81,7 @@ searchButton.addEventListener("click", async () => {
   }
 });
 
-const modalBody = document.querySelector(".modal-body");
+const modalPhoto = document.querySelector("#modal-photo");
 const modalLabel = document.querySelector("#modal-label");
 
 function createCard(data) {
@@ -98,7 +98,8 @@ function createCard(data) {
   card.addEventListener("click", () => {
     // Modify modal content
     modalLabel.innerHTML = `${data.title} by ${data.artistDisplayName}`;
-    modalBody.innerHTML = `<img src="${data.primaryImageSmall}" alt="${data.title}">`;
+    modalPhoto.innerHTML = `<img src="${data.primaryImageSmall}" alt="${data.title}">`;
+    getPalette(data.primaryImageSmall);
   });
   return card;
 }
@@ -120,20 +121,24 @@ function cleanData(data) {
   return true;
 }
 
-// Get palette
-// fetch(
-//   "https://api.imagga.com/v2/colors?image_url=https://images.metmuseum.org/CRDImages/ep/web-large/DP346474.jpg",
-//   {
-//     headers: {
-//       Authorization:
-//         "Basic YWNjX2NiYjk5MWJkZmMzZTYzMToyN2Q0YzJiYWIxNDg5ZDUwNzVhMGU0OWY1ZDhlNTgxMA==",
-//     },
-//   }
-// )
-//   .then((response) => response.json())
-//   .then((data) => {
-//     console.log(data.result.colors);
-//     for (var color of data.result.colors.foreground_colors) {
-//       column.innerHTML += `<div style="background-color: ${color.html_code}; width: 100px; height: 100px;"></div>`;
-//     }
-//   });
+const palette = document.querySelector("#modal-palette");
+async function getPalette(link) {
+  const response = await fetch(
+    `https://api.imagga.com/v2/colors?image_url=${link}`,
+    {
+      headers: {
+        Authorization:
+          "Basic YWNjX2NiYjk5MWJkZmMzZTYzMToyN2Q0YzJiYWIxNDg5ZDUwNzVhMGU0OWY1ZDhlNTgxMA==",
+      },
+    }
+  );
+  const data = await response.json();
+  palette.innerHTML = ""; // clear palette
+  // Combine the foreground and background colors
+  paletteArray = data.result.colors.foreground_colors.concat(
+    data.result.colors.background_colors
+  );
+  for (var color of paletteArray) {
+    palette.innerHTML += `<div class="palette-color" style="background-color: ${color.html_code};"></div>`;
+  }
+}
