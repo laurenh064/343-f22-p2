@@ -6,6 +6,7 @@ const column = document.querySelector("#column");
 const modalPhoto = document.querySelector("#modal-photo");
 const modalLabel = document.querySelector("#modal-label");
 const palette = document.querySelector("#modal-palette");
+const artInput = document.querySelector('#search');
 
 var numItems = 10;
 
@@ -52,6 +53,12 @@ numItemsInput.addEventListener("change", (e) => {
   numItems = e.target.value;
 });
 
+artInput.addEventListener("keyup", (event) => {
+  if(event.key === "Enter"){
+    event.preventDefault();
+    searchButton.click();
+  }
+})
 searchButton.addEventListener("click", async () => {
   // clear grid
   resetMasonry();
