@@ -7,6 +7,7 @@ const modalPhoto = document.querySelector("#modal-photo");
 const modalLabel = document.querySelector("#modal-label");
 const palette = document.querySelector("#modal-palette");
 const artInput = document.querySelector('#search');
+const objects = [];
 
 var numItems = 10;
 
@@ -96,6 +97,7 @@ searchButton.addEventListener("click", async () => {
       msnry.layout(); // readjust the layout
       numItems++;
     }
+    
   }
 });
 
@@ -116,6 +118,7 @@ function createCard(data) {
     modalPhoto.innerHTML = `<img src="${data.primaryImageSmall}" alt="${data.title}">`;
     getPalette(data.primaryImageSmall);
   });
+  objects.push(data);
   return card;
 }
 
