@@ -78,7 +78,6 @@ searchButton.addEventListener("click", async () => {
     }
   }
 });
-
 function createCard(data) {
   if (!cleanData(data)) {
     // return null for invalid data
