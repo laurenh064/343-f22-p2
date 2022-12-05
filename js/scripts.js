@@ -1,7 +1,13 @@
 // Get some objects
 const searchButton = document.querySelector("#searchButton");
+const numItemsInput = document.querySelector("#numItemsInput");
 const grid = document.querySelector(".grid");
 const column = document.querySelector("#column");
+const modalPhoto = document.querySelector("#modal-photo");
+const modalLabel = document.querySelector("#modal-label");
+const palette = document.querySelector("#modal-palette");
+
+var numItems = 10;
 
 // Masonry layout
 var msnry;
@@ -41,6 +47,11 @@ function resetMasonry() {
   });
 }
 
+// Change num items on input change
+numItemsInput.addEventListener("change", (e) => {
+  numItems = e.target.value;
+});
+
 searchButton.addEventListener("click", async () => {
   // clear grid
   resetMasonry();
@@ -57,8 +68,8 @@ searchButton.addEventListener("click", async () => {
 
   // Iterate through all objects
   for (var id of array) {
-    if (numItems >= 5) {
-      // Show max 15 items
+    if (numItems >= numItemsInput.value) {
+      // Show max number of items
       return;
     }
 
@@ -81,9 +92,6 @@ searchButton.addEventListener("click", async () => {
   }
 });
 
-const modalPhoto = document.querySelector("#modal-photo");
-const modalLabel = document.querySelector("#modal-label");
-
 function createCard(data) {
   if (!cleanData(data)) {
     // return null for invalid data
@@ -93,7 +101,7 @@ function createCard(data) {
   card.classList.add("grid-item");
 
   card.innerHTML = `
-    <img src="${data.primaryImageSmall}" alt="${data.title}" data-bs-toggle="modal" data-bs-target="#modal">`;
+      <img src="${data.primaryImageSmall}" alt="${data.title}" data-bs-toggle="modal" data-bs-target="#modal">`;
 
   card.addEventListener("click", () => {
     // Modify modal content
@@ -121,13 +129,14 @@ function cleanData(data) {
   return true;
 }
 
-const palette = document.querySelector("#modal-palette");
+// Get the palette based off the image and display it in the modal
 async function getPalette(link) {
   const response = await fetch(
     `https://api.imagga.com/v2/colors?image_url=${link}`,
     {
       headers: {
-        Authorization: "put key here",
+        Authorization:
+          "Basic YWNjX2NiYjk5MWJkZmMzZTYzMToyN2Q0YzJiYWIxNDg5ZDUwNzVhMGU0OWY1ZDhlNTgxMA==",
       },
     }
   );
