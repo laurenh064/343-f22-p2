@@ -116,6 +116,7 @@ searchButton.addEventListener("click", async () => {
       let item = document.createElement('li');
       item.innerHTML = department;
       item.addEventListener("click", () => {
+        
 
       })
       document.getElementById('dropdown').appendChild(item);
