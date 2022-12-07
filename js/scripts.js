@@ -7,7 +7,9 @@ const modalPhoto = document.querySelector("#modal-photo");
 const modalLabel = document.querySelector("#modal-label");
 const palette = document.querySelector("#modal-palette");
 const artInput = document.querySelector('#search');
-const objects = [];
+const dropdownItems = document.querySelector('#dropdown');
+let objects = [];
+let showingItems = [];
 
 var numItems = 10;
 
@@ -37,6 +39,11 @@ function resetMasonry() {
   cards.forEach((card) => {
     card.remove();
   });
+  while (dropdownItems.firstChild) {
+    dropdownItems.removeChild(dropdownItems.firstChild);
+  }
+  objects = [];
+  showingItems = [];
 
   msnry.destroy();
   imagesLoaded(grid, function () {
@@ -55,7 +62,7 @@ numItemsInput.addEventListener("change", (e) => {
 });
 
 artInput.addEventListener("keyup", (event) => {
-  if(event.key === "Enter"){
+  if (event.key === "Enter") {
     event.preventDefault();
     searchButton.click();
   }
@@ -97,7 +104,23 @@ searchButton.addEventListener("click", async () => {
       msnry.layout(); // readjust the layout
       numItems++;
     }
-    
+    const department = data.department;
+    var valid = true;
+
+    for (var showingItem of showingItems) {
+      if (showingItem.department === department) {
+        valid = false;
+      }
+    }
+    if (valid) {
+      let item = document.createElement('li');
+      item.innerHTML = department;
+      item.addEventListener("click", () => {
+
+      })
+      document.getElementById('dropdown').appendChild(item);
+      showingItems.push(data);
+    }
   }
 });
 
