@@ -6,8 +6,8 @@ const column = document.querySelector("#column");
 const modalPhoto = document.querySelector("#modal-photo");
 const modalLabel = document.querySelector("#modal-label");
 const palette = document.querySelector("#modal-palette");
-const artInput = document.querySelector('#search');
-const dropdownItems = document.querySelector('#dropdown');
+const artInput = document.querySelector("#search");
+const dropdownItems = document.querySelector("#dropdown");
 let objects = [];
 let showingItems = [];
 
@@ -66,7 +66,7 @@ artInput.addEventListener("keyup", (event) => {
     event.preventDefault();
     searchButton.click();
   }
-})
+});
 searchButton.addEventListener("click", async () => {
   // clear grid
   resetMasonry();
@@ -103,27 +103,46 @@ searchButton.addEventListener("click", async () => {
       msnry.appended(card); // Append card to masonry layout
       msnry.layout(); // readjust the layout
       numItems++;
-    }
-    const department = data.department;
-    var valid = true;
-
-    for (var showingItem of showingItems) {
-      if (showingItem.department === department) {
-        valid = false;
-      }
-    }
-    if (valid) {
-      let item = document.createElement('li');
-      item.innerHTML = department;
-      item.addEventListener("click", () => {
-        
-
-      })
-      document.getElementById('dropdown').appendChild(item);
-      showingItems.push(data);
+      createDepDropwdown(data);
     }
   }
 });
+
+function createDepDropwdown(data) {
+  const department = data.department;
+  var valid = true;
+
+  for (var showingItem of showingItems) {
+    if (showingItem.department === department) {
+      valid = false;
+    }
+  }
+  if (valid) {
+    let item = document.createElement("li");
+    item.classList.add("dropdown-item");
+    item.innerHTML = department;
+    item.addEventListener("click", () => {
+      filterItems(department);
+      msnry.layout(); // readjust the layout
+    });
+    document.getElementById("dropdown").appendChild(item);
+  }
+  showingItems.push(data);
+}
+
+function filterItems(department) {
+  // Show all items
+  for (var cards in objects) {
+    document.getElementById(objects[cards].id).style.display = "block";
+  }
+
+  // Hide cards that are not in department
+  for (var item of showingItems) {
+    if (item.department !== department) {
+      document.getElementById(item.objectID).style.display = "none";
+    }
+  }
+}
 
 function createCard(data) {
   if (!cleanData(data)) {
@@ -132,6 +151,7 @@ function createCard(data) {
   }
   const card = document.createElement("div");
   card.classList.add("grid-item");
+  card.id = data.objectID;
 
   card.innerHTML = `
       <img src="${data.primaryImageSmall}" alt="${data.title}" data-bs-toggle="modal" data-bs-target="#modal">`;
@@ -142,7 +162,7 @@ function createCard(data) {
     modalPhoto.innerHTML = `<img src="${data.primaryImageSmall}" alt="${data.title}">`;
     getPalette(data.primaryImageSmall);
   });
-  objects.push(data);
+  objects.push(card);
   return card;
 }
 
