@@ -36,12 +36,15 @@ imagesLoaded(grid, function () {
  */
 function resetMasonry() {
   const cards = document.querySelectorAll(".grid-item");
+
+  // Remove the cards
   cards.forEach((card) => {
     card.remove();
   });
-  while (dropdownItems.firstChild) {
-    dropdownItems.removeChild(dropdownItems.firstChild);
-  }
+  // Remove the dept dropdown items
+  dropdownItems.innerHTML =
+    '<li class="dropdown-item" id="all" onclick="showAll()">All</li>';
+
   objects = [];
   showingItems = [];
 
@@ -54,6 +57,15 @@ function resetMasonry() {
       percentPosition: true,
     });
   });
+}
+
+// Show all items
+function showAll() {
+  // Show all items
+  for (var cards in objects) {
+    document.getElementById(objects[cards].id).style.display = "block";
+  }
+  msnry.layout(); // readjust the layout
 }
 
 // Change num items on input change
@@ -121,6 +133,8 @@ function createDepDropwdown(data) {
     let item = document.createElement("li");
     item.classList.add("dropdown-item");
     item.innerHTML = department;
+
+    // Filter items when clicked
     item.addEventListener("click", () => {
       filterItems(department);
       msnry.layout(); // readjust the layout
