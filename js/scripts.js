@@ -121,6 +121,8 @@ function createDepDropwdown(data) {
     let item = document.createElement("li");
     item.classList.add("dropdown-item");
     item.innerHTML = department;
+
+    // Filter items when clicked
     item.addEventListener("click", () => {
       filterItems(department);
       msnry.layout(); // readjust the layout
